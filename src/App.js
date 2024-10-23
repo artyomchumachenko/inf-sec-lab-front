@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React, { useState } from 'react';
+import { Container, Typography } from '@mui/material';
+import ModeSelector from './components/ModeSelector';
+import EncryptionForm from './components/EncryptionForm';
+import RSAControls from './components/RSAControls';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [encryptionMethod, setEncryptionMethod] = useState('RSA');
+    const [inputText, setInputText] = useState('');
+    const [outputText, setOutputText] = useState('');
+    const [keyStatus, setKeyStatus] = useState('');
+
+    return (
+            <Container maxWidth="md" style={{ marginTop: '2rem' }}>
+                <Typography variant="h4" align="center" gutterBottom>
+                    Encryption Tool
+                </Typography>
+                <ModeSelector
+                        encryptionMethod={encryptionMethod}
+                        setEncryptionMethod={setEncryptionMethod}
+                />
+
+                <EncryptionForm
+                        encryptionMethod={encryptionMethod}
+                        inputText={inputText}
+                        setInputText={setInputText}
+                        outputText={outputText}
+                        setOutputText={setOutputText}
+                />
+
+                {encryptionMethod === 'RSA' && (
+                        <RSAControls keyStatus={keyStatus} setKeyStatus={setKeyStatus} />
+                )}
+            </Container>
+    );
 }
 
 export default App;
