@@ -2,6 +2,7 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import {Alert, Button, Grid, Snackbar, TextField} from '@mui/material';
+import axiosInstance from "./axiosInstance";
 
 function EncryptionForm({
     encryptionMethod,
@@ -24,11 +25,11 @@ function EncryptionForm({
         try {
             let response;
             if (encryptionMethod === 'RSA') {
-                response = await axios.post('http://localhost:8080/rsa/encrypt', {
+                response = await axiosInstance.post('/rsa/encrypt', {
                     text: inputText,
                 });
             } else if (encryptionMethod === 'BLOCK') {
-                response = await axios.post('http://localhost:8080/block/encrypt', {
+                response = await axiosInstance.post('/block/encrypt', {
                     text: inputText,
                     mode: '128', // Use 128-bit mode by default
                 });
@@ -56,11 +57,11 @@ function EncryptionForm({
         try {
             let response;
             if (encryptionMethod === 'RSA') {
-                response = await axios.post('http://localhost:8080/rsa/decrypt', {
+                response = await axiosInstance.post('/rsa/decrypt', {
                     text: inputText,
                 });
             } else if (encryptionMethod === 'BLOCK') {
-                response = await axios.post('http://localhost:8080/block/decrypt', {
+                response = await axiosInstance.post('/block/decrypt', {
                     text: inputText,
                     mode: '128', // Use 128-bit mode by default
                 });

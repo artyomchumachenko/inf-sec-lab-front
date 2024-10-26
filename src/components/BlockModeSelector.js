@@ -8,6 +8,7 @@ import {
     Snackbar,
     Alert,
 } from '@mui/material';
+import axiosInstance from "./axiosInstance";
 
 function EncryptionForm({
     encryptionMethod,
@@ -39,12 +40,12 @@ function EncryptionForm({
         try {
             let response;
             if (encryptionMethod === 'RSA') {
-                response = await axios.post('http://localhost:8080/rsa/encrypt', {
+                response = await axiosInstance.post('/rsa/encrypt', {
                     text: inputText,
                 });
             } else if (encryptionMethod === 'BLOCK') {
                 const modeValue = getBlockModeValue(blockMode);
-                response = await axios.post('http://localhost:8080/block/encrypt', {
+                response = await axiosInstance.post('/block/encrypt', {
                     text: inputText,
                     mode: modeValue,
                 });

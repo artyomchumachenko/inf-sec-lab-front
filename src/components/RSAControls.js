@@ -8,6 +8,7 @@ import {
     Snackbar,
     Alert,
 } from '@mui/material';
+import axiosInstance from "./axiosInstance";
 
 function RSAControls({ keyStatus, setKeyStatus }) {
     const [errorMessage, setErrorMessage] = useState('');
@@ -15,7 +16,7 @@ function RSAControls({ keyStatus, setKeyStatus }) {
 
     const handleGenerateKeys = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/rsa/keys-generate');
+            const response = await axiosInstance.get('/rsa/keys-generate');
             setKeyStatus(response.data);
             setSuccessMessage('Key generation started.');
         } catch (error) {
@@ -30,7 +31,7 @@ function RSAControls({ keyStatus, setKeyStatus }) {
 
     const handleCheckKeysStatus = async () => {
         try {
-            const response = await axios.get('http://localhost:8080/rsa/keys-status');
+            const response = await axiosInstance.get('/rsa/keys-status');
             setKeyStatus(response.data);
             setSuccessMessage('Key status retrieved.');
         } catch (error) {
