@@ -1,18 +1,14 @@
 // components/RSAControls.js
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, {useState} from 'react';
 import {
-    TextField,
-    Button,
-    Grid,
-    Snackbar,
-    Alert,
+    Alert, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, Snackbar, TextField,
 } from '@mui/material';
-import axiosInstance from "./axiosInstance";
+import axiosInstance from './axiosInstance';
 
 function RSAControls({ keyStatus, setKeyStatus }) {
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const [confirmOpen, setConfirmOpen] = useState(false);
 
     const handleGenerateKeys = async () => {
         try {
@@ -42,6 +38,31 @@ function RSAControls({ keyStatus, setKeyStatus }) {
                             : 'Error checking keys status.'
             );
         }
+    };
+
+    const handleDeleteKeys = async () => {
+        try {
+            await axiosInstance.delete('/rsa/keys-delete');
+            setKeyStatus('Keys deleted.');
+            setSuccessMessage('RSA KeyPair has been deleted.');
+        } catch (error) {
+            console.error(error);
+            setErrorMessage(
+                    error.response && error.response.data
+                            ? error.response.data
+                            : 'Error deleting keys.'
+            );
+        } finally {
+            setConfirmOpen(false); // Close the confirmation dialog
+        }
+    };
+
+    const handleOpenConfirm = () => {
+        setConfirmOpen(true);
+    };
+
+    const handleCloseConfirm = () => {
+        setConfirmOpen(false);
     };
 
     const handleCloseSnackbar = () => {
@@ -76,8 +97,36 @@ function RSAControls({ keyStatus, setKeyStatus }) {
                                 KEYS STATUS
                             </Button>
                         </Grid>
+                        <Grid item>
+                            <Button variant="outlined" color="secondary" onClick={handleOpenConfirm}>
+                                DELETE KEYS
+                            </Button>
+                        </Grid>
                     </Grid>
                 </Grid>
+
+                {/* Confirmation Dialog */}
+                <Dialog
+                        open={confirmOpen}
+                        onClose={handleCloseConfirm}
+                        aria-labelledby="confirm-dialog-title"
+                        aria-describedby="confirm-dialog-description"
+                >
+                    <DialogTitle id="confirm-dialog-title">Delete RSA KeyPair</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="confirm-dialog-description">
+                            Are you sure you want to delete RSA KeyPair?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleCloseConfirm} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={handleDeleteKeys} color="secondary" autoFocus>
+                            Delete
+                        </Button>
+                    </DialogActions>
+                </Dialog>
 
                 <Snackbar
                         open={!!errorMessage || !!successMessage}
@@ -85,11 +134,19 @@ function RSAControls({ keyStatus, setKeyStatus }) {
                         onClose={handleCloseSnackbar}
                 >
                     {errorMessage ? (
-                            <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
+                            <Alert
+                                    onClose={handleCloseSnackbar}
+                                    severity="error"
+                                    sx={{ width: '100%' }}
+                            >
                                 {errorMessage}
                             </Alert>
                     ) : (
-                            <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+                            <Alert
+                                    onClose={handleCloseSnackbar}
+                                    severity="success"
+                                    sx={{ width: '100%' }}
+                            >
                                 {successMessage}
                             </Alert>
                     )}

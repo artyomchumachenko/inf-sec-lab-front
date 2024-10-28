@@ -1,6 +1,5 @@
 // src/components/EncryptionForm.js
 import React, {useState} from 'react';
-import axios from 'axios';
 import {Alert, Button, Grid, Snackbar, TextField} from '@mui/material';
 import axiosInstance from "./axiosInstance";
 
@@ -13,6 +12,7 @@ function EncryptionForm({
 }) {
     const [errorMessage, setErrorMessage] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
+    const [encryptionKey, setEncryptionKey] = useState('');
 
     const handleEncrypt = async () => {
         if (!inputText) {
@@ -31,7 +31,8 @@ function EncryptionForm({
             } else if (encryptionMethod === 'BLOCK') {
                 response = await axiosInstance.post('/block/encrypt', {
                     text: inputText,
-                    mode: '128', // Use 128-bit mode by default
+                    mode: '128',
+                    key: encryptionKey,
                 });
             }
             setOutputText(response.data.text);
@@ -43,6 +44,7 @@ function EncryptionForm({
                             ? error.response.data
                             : 'Encryption error.'
             );
+            setOutputText('');
         }
     };
 
@@ -63,7 +65,8 @@ function EncryptionForm({
             } else if (encryptionMethod === 'BLOCK') {
                 response = await axiosInstance.post('/block/decrypt', {
                     text: inputText,
-                    mode: '128', // Use 128-bit mode by default
+                    mode: '128',
+                    key: encryptionKey,
                 });
             }
             setOutputText(response.data.text.trim());
@@ -75,6 +78,29 @@ function EncryptionForm({
                             ? error.response.data
                             : 'Decryption error.'
             );
+            setOutputText('');
+        }
+    };
+
+    const handleLoadLast = async () => {
+        try {
+            const response = await axiosInstance.get('/block/last-key');
+            setEncryptionKey(response.data.text);
+            setSuccessMessage('Loaded the last encryption key.');
+        } catch (error) {
+            console.error(error);
+            setErrorMessage('Failed to load the last encryption key.');
+        }
+    };
+
+    const handleLoadGOST = async () => {
+        try {
+            const response = await axiosInstance.get('/block/gost-key');
+            setEncryptionKey(response.data.text);
+            setSuccessMessage('Loaded the GOST encryption key.');
+        } catch (error) {
+            console.error(error);
+            setErrorMessage('Failed to load the GOST encryption key.');
         }
     };
 
@@ -97,6 +123,37 @@ function EncryptionForm({
                                 onChange={(e) => setInputText(e.target.value)}
                         />
                     </Grid>
+
+                    {encryptionMethod === 'BLOCK' && (
+                            <Grid item xs={12}>
+                                <TextField
+                                        label="Encryption Key"
+                                        fullWidth
+                                        variant="outlined"
+                                        value={encryptionKey}
+                                        onChange={(e) => setEncryptionKey(e.target.value)}
+                                />
+                                <Grid container spacing={1} style={{ marginTop: '8px' }}>
+                                    <Grid item>
+                                        <Button
+                                                variant="outlined"
+                                                onClick={handleLoadLast}
+                                        >
+                                            Load Last
+                                        </Button>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button
+                                                variant="outlined"
+                                                onClick={handleLoadGOST}
+                                        >
+                                            Load GOST Key
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Grid>
+                    )}
+
                     <Grid item xs={12}>
                         <TextField
                                 label="Output Text"
@@ -110,6 +167,7 @@ function EncryptionForm({
                                 }}
                         />
                     </Grid>
+
                     <Grid item xs={12} container justifyContent="center" spacing={2}>
                         <Grid item>
                             <Button
