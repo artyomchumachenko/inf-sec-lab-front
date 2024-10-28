@@ -1,0 +1,235 @@
+/* App.css */
+
+/* Общие стили */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 0;
+}
+
+.app-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+h1, h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+.encryption-form, .history-container {
+    margin-bottom: 50px;
+}
+
+/* Стили для формы шифрования */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+}
+
+textarea, input[type='text'] {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    resize: vertical;
+    font-size: 16px;
+    background-color: #fff;
+    color: #495057;
+}
+
+textarea:focus, input[type='text']:focus {
+    border-color: #80bdff;
+    outline: none;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.encrypt-btn {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.encrypt-btn:hover {
+    background-color: #218838;
+}
+
+.decrypt-btn {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.decrypt-btn:hover {
+    background-color: #c82333;
+}
+
+.block-mode-selector .button-group {
+    justify-content: flex-start;
+}
+
+/* Стили для уведомлений */
+.notification {
+    position: relative;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 25px;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.notification.error {
+    background-color: #dc3545;
+}
+
+.notification.success {
+    background-color: #28a745;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 25px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: #ddd;
+}
+
+/* Стили для таблицы истории шифрования */
+.history-container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+    font-size: 16px;
+}
+
+.history-table th, .history-table td {
+    padding: 15px;
+    border: 1px solid #dee2e6;
+    text-align: center;
+}
+
+.history-table th {
+    background-color: #e9ecef;
+    color: #495057;
+    font-weight: 600;
+}
+
+.history-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+.history-table tr:hover {
+    background-color: #e2e6ea;
+}
+
+.download-btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 15px;
+}
+
+.download-btn:hover {
+    background-color: #0069d9;
+}
+
+.error-text {
+    color: #dc3545;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .button-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .close-btn {
+        top: 10px;
+        right: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .app-container {
+        padding: 20px;
+    }
+
+    textarea, input[type='text'] {
+        padding: 12px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+    }
+
+    .download-btn {
+        padding: 8px 15px;
+    }
+}
