@@ -1,4 +1,3 @@
-// src/components/ModeSelector.js
 import React from 'react';
 import './AltNavBar.css'; // Убедитесь, что ваш CSS импортирован
 
@@ -13,6 +12,7 @@ function ModeSelector({ encryptionMethod, setEncryptionMethod }) {
                 >
                     <option value="RSA">RSA</option>
                     <option value="BLOCK">BLOCK</option>
+                    <option value="HASH">HASH</option> {/* Добавили HASH */}
                 </select>
             </div>
     );

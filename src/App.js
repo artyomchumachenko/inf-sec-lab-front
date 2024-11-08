@@ -7,23 +7,23 @@ import {
     Route,
     Navigate,
 } from 'react-router-dom';
-// import ModeSelector from './alternative/ModeSelector';
-// import EncryptionForm from './alternative/EncryptionForm';
-// import RSAControls from './alternative/RSAControls';
-// import Login from './alternative/Login';
-// import Register from './alternative/Register';
-// import EncryptionHistory from './alternative/EncryptionHistory';
-// import Account from './components/Account';
-// import NavBar from './alternative/NavBar';
-
-import ModeSelector from './components/ModeSelector';
-import EncryptionForm from './components/EncryptionForm';
-import RSAControls from './components/RSAControls';
-import Login from './components/Login';
-import Register from './components/Register';
-import EncryptionHistory from './components/EncryptionHistory';
+import ModeSelector from './alternative/ModeSelector';
+import EncryptionForm from './alternative/EncryptionForm';
+import RSAControls from './alternative/RSAControls';
+import Login from './alternative/Login';
+import Register from './alternative/Register';
+import EncryptionHistory from './alternative/EncryptionHistory';
 import Account from './components/Account';
-import NavBar from './components/NavBar';
+import NavBar from './alternative/NavBar';
+
+// import ModeSelector from './components/ModeSelector';
+// import EncryptionForm from './components/EncryptionForm';
+// import RSAControls from './components/RSAControls';
+// import Login from './components/Login';
+// import Register from './components/Register';
+// import EncryptionHistory from './components/EncryptionHistory';
+// import Account from './components/Account';
+// import NavBar from './components/NavBar';
 
 function App() {
     const [encryptionMethod, setEncryptionMethod] = useState('RSA');
