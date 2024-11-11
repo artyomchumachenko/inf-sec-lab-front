@@ -194,6 +194,12 @@ textarea:focus, input[type='text']:focus {
     font-weight: 500;
 }
 
+.btn.primary-btn.disabled-btn {
+    background-color: grey;    /* Цвет неактивной кнопки */
+    cursor: not-allowed;       /* Изменяем курсор при наведении */
+    opacity: 0.6;              /* Добавляем полупрозрачность */
+}
+
 /* Адаптивность */
 @media (max-width: 768px) {
     .button-group {
